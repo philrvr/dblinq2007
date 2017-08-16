@@ -496,7 +496,7 @@ namespace nwind
         }
 
         [Test]
-        [ExpectedException(ExceptionType=typeof(InvalidOperationException), ExpectedMessage="Data context options cannot be modified after results have been returned from a query.")]
+        [ExpectedException(ExpectedException=typeof(InvalidOperationException), ExpectedMessage="Data context options cannot be modified after results have been returned from a query.")]
         public void C13_Changing_ObjectTrackingEnabled2False()
         {
             Northwind db = CreateDB();
@@ -507,7 +507,7 @@ namespace nwind
         }
 
         [Test]
-        [ExpectedException(ExceptionType = typeof(InvalidOperationException), ExpectedMessage = "Data context options cannot be modified after results have been returned from a query.")]
+        [ExpectedException(ExpectedException = typeof(InvalidOperationException), ExpectedMessage = "Data context options cannot be modified after results have been returned from a query.")]
         public void C14_Changing_DeferredLoadingEnabled2False()
         {
             Northwind db = CreateDB();
@@ -518,7 +518,7 @@ namespace nwind
         }
 
         [Test]
-        [ExpectedException(ExceptionType = typeof(InvalidOperationException), ExpectedMessage = "Object tracking is not enabled for the current data context instance.")]
+        [ExpectedException(ExpectedException = typeof(InvalidOperationException), ExpectedMessage = "Object tracking is not enabled for the current data context instance.")]
         public void C15_SubmitChanges_DeferredLoadingEnabled_False()
         {
             Northwind db = CreateDB();

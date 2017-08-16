@@ -1,0 +1,9 @@
+build/
+build.dbg/
+build.dbg.mono/
+src/packages/
+bin
+obj
+*.csproj.user
+*.sln.DotSettings.user
+*.suo

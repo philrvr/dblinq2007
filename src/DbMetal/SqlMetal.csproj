@@ -1,4 +1,4 @@
-﻿<Project ToolsVersion="3.5" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -27,6 +27,11 @@
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>3.5</OldToolsVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -153,27 +158,14 @@
   <ItemGroup>
     <EmbeddedResource Include="Language\GermanWords.txt" />
   </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <ProjectReference Include="..\DbLinq\System.Data.Linq.csproj">
-      <Project>{97305421-3071-4175-AA3C-9A432CC28121}</Project>
+      <Project>{97305421-3071-4175-aa3c-9a432cc28121}</Project>
       <Name>System.Data.Linq</Name>
     </ProjectReference>
   </ItemGroup>
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
-  <ItemGroup>
-    <DependentAssembly Include="$(SolutionDir)..\lib\Npgsql.dll" />
-    <DependentAssembly Include="$(SolutionDir)..\lib\Mono.Security.dll" />
-    <DependentAssembly Include="$(SolutionDir)..\lib\Ingres.Stereo.dll" />
-    <DependentAssembly Include="$(SolutionDir)..\lib\Oracle.DataAccess.dll" />
-    <DependentAssembly Include="$(SolutionDir)..\lib\MySql.Data.dll" />
-    <DependentAssembly Include="$(SolutionDir)..\lib\sqlite3.dll" />
-    <DependentAssembly Include="$(SolutionDir)..\lib\System.Data.SQLite.DLL" />
-    <DependentAssembly Include="$(SolutionDir)..\lib\FirebirdSql.Data.FirebirdClient.dll" />
-    <DependentAssembly Include="$(SolutionDir)..\lib\System.Data.SqlServerCe.dll" />
-  </ItemGroup>
   <Target Name="AfterBuild">
-    <Copy 
-        SourceFiles="@(DependentAssembly)" 
-        DestinationFolder="$(OutputPath)" />
+    <Copy SourceFiles="@(DependentAssembly)" DestinationFolder="$(OutputPath)" />
   </Target>
 </Project>
