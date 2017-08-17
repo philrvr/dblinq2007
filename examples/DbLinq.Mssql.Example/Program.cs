@@ -36,7 +36,7 @@ namespace DbLinq.Mssql.Example
     {
         static void Main(string[] args)
         {
-            string connStr = "Data Source=.\\SQLExpress;Integrated Security=True;Initial Catalog=Northwind";
+            string connStr = "Data Source=.;Integrated Security=True;Initial Catalog=Northwind";
              Northwind db = new Northwind(new SqlConnection(connStr));
 
 
