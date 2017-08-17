@@ -60,20 +60,19 @@ namespace DbLinq.SqlCe
         protected virtual DataConstraint ReadConstraint(IDataReader rdr)
         {
             DataConstraint t = new DataConstraint();
-            const int K_ID = 0;
-            //const int K_SEQ = 1;
-            const int K_TABLE = 1;
-            const int K_FROM = 3;
-            const int K_TO = 4;
-
+            
             t.TableSchema = "main";
             //t.ReferencedTableSchema = "main";
+            t.ReferencedTableSchema = null;
             t.ConstraintName = rdr.GetAsString(0);
             t.TableName = rdr.GetString(1);
-            t.ColumnName = rdr.GetAsString(2);
+            t.ColumnName = rdr.GetAsString(2);            
 
             //t.ReferencedTableName = UnquoteSqlName(rdr.GetAsString(K_TABLE));
+            t.ReferencedTableName = null;
             //t.ReferencedColumnName = rdr.GetAsString(K_TO);
+            t.ReferencedColumnName = null;
+            
             return t;
 
         }

@@ -20,7 +20,9 @@ namespace nwind
     [Table(Name = "dbo.Employees")]
     partial class EmployeeWithStringIdentifier
     {
+        #pragma warning disable CS0649
         private int _EmployeeID;
+        #pragma warning restore CS0649
         private string _LastName;
 
         [Column(Storage = "_EmployeeID", Name = "EmployeeID", AutoSync = AutoSync.OnInsert, DbType = "Int NOT NULL IDENTITY", IsPrimaryKey = true, IsDbGenerated = true)]
@@ -51,7 +53,9 @@ namespace nwind
         public bool propertyInvoked_Description = false;
 
         // Tests the Storage without a setter for the property.
+        #pragma warning disable CS0649
         private int _categoryID;
+        #pragma warning restore CS0649
         [Column(Storage = "_categoryID", AutoSync = AutoSync.OnInsert, DbType = "Int NOT NULL IDENTITY", IsPrimaryKey = true, IsDbGenerated = true)]
         public int CategoryID
         {

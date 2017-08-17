@@ -62,6 +62,7 @@ namespace DbLinq.Firebird
             // TODO: debug stored procedures support
             return;
 
+            /*
             var procs = ReadProcedures(conn, schemaName.DbName);
 
             foreach (DataStoredProcedure proc in procs)
@@ -78,6 +79,7 @@ namespace DbLinq.Firebird
 
                 schema.Functions.Add(func);
             }
+            */
         }
 
         protected override void LoadConstraints(Database schema, SchemaName schemaName, IDbConnection conn, NameFormat nameFormat, Names names)

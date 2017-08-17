@@ -78,11 +78,13 @@ using DbLinq.Data.Linq;
 
             Northwind db = CreateDB();
 
+            #pragma warning disable CS0472
             var q = from c in db.Customers
                     join o in db.Orders on c.CustomerID equals o.CustomerID into oc
                     from x in oc.DefaultIfEmpty()
                     where x.OrderID == null
                     select c;
+            #pragma warning restore CS0472
 
             var list = q.ToList();
             Assert.IsTrue(list.Count > 0);

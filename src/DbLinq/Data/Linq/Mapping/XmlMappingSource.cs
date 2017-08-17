@@ -173,7 +173,7 @@ namespace DbLinq.Data.Linq.Mapping
                 else
                 {
                     r.ReadStartElement(name, DbmlNamespace);
-                    for (r.MoveToContent(); r.NodeType != XmlNodeType.EndElement; r.MoveToContent())
+                    for (r.MoveToContent(); r.NodeType != XmlNodeType.EndElement; /*r.MoveToContent()*/)
                     {
                         if (r.NamespaceURI != DbmlNamespace)
                             r.Skip();

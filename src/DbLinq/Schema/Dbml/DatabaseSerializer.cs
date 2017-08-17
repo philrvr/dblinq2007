@@ -2202,7 +2202,7 @@ namespace DbLinq.Schema.Dbml
 			}
 		}
 
-		public XmlSerializer GetSerializer (System.Type type)
+		public override XmlSerializer GetSerializer (System.Type type)
 		{
 			switch (type.FullName) {
 			case "DbLinq.Schema.Dbml.Database":

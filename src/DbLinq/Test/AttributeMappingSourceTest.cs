@@ -64,7 +64,10 @@ namespace DbLinqTest
         }
 
         public Table<Foo> FooTable { get { return GetTable<Foo>(); } }
+
+        #pragma warning disable CS0649
         public Table<Foo> FooFieldTable;
+        #pragma warning restore CS0649
     }
 
     [TestFixture]

@@ -1063,7 +1063,9 @@ namespace nwind
 
         class Chai
         {
+            #pragma warning disable CS0649
             internal int ChaiId;
+            #pragma warning restore CS0649
         }
 
         [Test]
@@ -1167,7 +1169,9 @@ namespace nwind
             [Table(Name = "customers")]
             public class Customer : AbstractCustomer
             {
+                #pragma warning disable CS0649
                 string city;
+                #pragma warning restore CS0649
                 [Column(Storage = "city", Name = "city")]
                 public override string City
                 {

@@ -147,7 +147,7 @@ namespace Test_NUnit
             {
                 object oResult = cmd.ExecuteScalar();
                 Assert.IsNotNull("Expecting result, instead got null. (sql=" + sql + ")");
-                Assert.IsInstanceOfType(typeof(long), oResult, "Expecting 'long' result from query " + sql + ", instead got type " + oResult.GetType());
+                Assert.IsInstanceOf<long>(oResult, "Expecting 'long' result from query " + sql + ", instead got type " + oResult.GetType());
                 return (long)oResult;
             }
         }

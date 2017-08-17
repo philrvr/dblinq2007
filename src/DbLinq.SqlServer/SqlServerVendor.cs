@@ -32,8 +32,6 @@ using System.Text;
 using System.Data;
 using System.Data.Linq.Mapping;
 
-using DbLinq.Data.Linq;
-using DbLinq.Data.Linq.SqlClient;
 using DbLinq.Util;
 using DbLinq.Vendor;
 

@@ -143,7 +143,6 @@ namespace DbLinqTest {
         public void Ctor_MappingIsNull()
         {
             MappingSource mapping = null;
-            string fileOrServerOrConnection = null;
             new DataContext("", mapping);
         }
 

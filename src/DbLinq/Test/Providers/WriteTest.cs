@@ -673,7 +673,9 @@ dummy text
 
         class OrderDetailWithSum : OrderDetail, INotifyPropertyChanged
         {
+            #pragma warning disable CS0108
             public event PropertyChangedEventHandler PropertyChanged;
+            #pragma warning restore CS0108
             protected virtual void OnPropertyChanged(string propertyName)
             {
                 if (PropertyChanged != null)
