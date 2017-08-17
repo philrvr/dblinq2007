@@ -99,6 +99,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestReporter", "Tools\TestR
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbLinq.SqlCe", "DbLinq.SqlCe\DbLinq.SqlCe.csproj", "{76FB2E0F-C03B-4996-AD7D-81DB93D0BF07}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DbLinqFull", "DbLinq\DbLinqFull.csproj", "{1BB78027-61A1-4B3B-801E-AB2B73FC7137}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug - Mono Strict|Any CPU = Debug - Mono Strict|Any CPU
@@ -324,6 +326,12 @@ Global
 		{76FB2E0F-C03B-4996-AD7D-81DB93D0BF07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{76FB2E0F-C03B-4996-AD7D-81DB93D0BF07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{76FB2E0F-C03B-4996-AD7D-81DB93D0BF07}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BB78027-61A1-4B3B-801E-AB2B73FC7137}.Debug - Mono Strict|Any CPU.ActiveCfg = Debug - Mono Strict|Any CPU
+		{1BB78027-61A1-4B3B-801E-AB2B73FC7137}.Debug - Mono Strict|Any CPU.Build.0 = Debug - Mono Strict|Any CPU
+		{1BB78027-61A1-4B3B-801E-AB2B73FC7137}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BB78027-61A1-4B3B-801E-AB2B73FC7137}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BB78027-61A1-4B3B-801E-AB2B73FC7137}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BB78027-61A1-4B3B-801E-AB2B73FC7137}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

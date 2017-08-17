@@ -36,6 +36,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
+using System.Text.RegularExpressions;
 
 #if MONO_STRICT
 using AttributeMappingSource  = System.Data.Linq.Mapping.AttributeMappingSource;
@@ -213,83 +214,84 @@ namespace DbLinq.Data.Linq
             Profiler.At("END DataContext(string)");
         }
 
-        private IVendor GetVendor(ref string connectionString)
+        private static IVendor GetVendor(ref string connectionString)
         {
-            if (connectionString == null)
-                throw new ArgumentNullException("connectionString");
+            if (connectionString == null) throw new ArgumentNullException(nameof(connectionString));
 
-            Assembly assy;
-            string vendorClassToLoad;
-            GetVendorInfo(ref connectionString, out assy, out vendorClassToLoad);
+            var vendorName = GetVendorName(ref connectionString);
+            var vendorClass = $"{vendorName}Vendor";
 
-            var types =
-                from type in assy.GetTypes()
-                where type.Name.ToLowerInvariant() == vendorClassToLoad.ToLowerInvariant() &&
-                    type.GetInterfaces().Contains(typeof(IVendor)) &&
-                    type.GetConstructor(Type.EmptyTypes) != null
-                select type;
-            if (!types.Any())
+            var type = Assembly.GetExecutingAssembly().GetType($"DbLinq.{vendorName}.{vendorClass}");
+
+            if (type == null || !IsSuitableVendorClass(type))
             {
-                throw new ArgumentException(string.Format("Found no IVendor class in assembly `{0}' named `{1}' having a default constructor.",
-                    assy.GetName().Name, vendorClassToLoad));
-            }
-            else if (types.Count() > 1)
-            {
-                throw new ArgumentException(string.Format("Found too many IVendor classes in assembly `{0}' named `{1}' having a default constructor.",
-                    assy.GetName().Name, vendorClassToLoad));
-            }
-            return (IVendor) Activator.CreateInstance(types.First());
-        }
+                var assembly = LoadVendorAssembly(vendorName);
 
-        private void GetVendorInfo(ref string connectionString, out Assembly assembly, out string typeName)
-        {
-            System.Text.RegularExpressions.Regex reProvider
-                = new System.Text.RegularExpressions.Regex(@"DbLinqProvider=([\w\.]+);?");
+                var types = assembly.GetTypes()
+                    .Where(t => string.Equals(t.Name, vendorClass, StringComparison.InvariantCultureIgnoreCase) &&
+                                IsSuitableVendorClass(t)).ToArray();
 
-            string assemblyName = null;
-            string vendor;
-            if (!reProvider.IsMatch(connectionString))
-            {
-                vendor       = "SqlServer";
-                assemblyName = "DbLinq.SqlServer";
-            }
-            else
-            {
-                var match    = reProvider.Match(connectionString);
-                vendor       = match.Groups[1].Value;
-                assemblyName = "DbLinq." + vendor;
-
-                //plain DbLinq - non MONO: 
-                //IVendor classes are in DLLs such as "DbLinq.MySql.dll"
-                if (vendor.Contains("."))
+                if (!types.Any())
                 {
-                    //already fully qualified DLL name?
-                    throw new ArgumentException("Please provide a short name, such as 'MySql', not '" + vendor + "'");
+                    throw new ArgumentException($"Found no IVendor class in assembly `{assembly.GetName().Name}' named `{vendorClass}' having a default constructor.");
                 }
 
-                //shorten: "DbLinqProvider=X;Server=Y" -> ";Server=Y"
-                connectionString = reProvider.Replace(connectionString, "");
+                if (types.Length > 1)
+                {
+                    throw new ArgumentException($"Found too many IVendor classes in assembly `{assembly.GetName().Name}' named `{vendorClass}' having a default constructor.");
+                }
+
+                type = types.First();
+            }
+            
+            return (IVendor) Activator.CreateInstance(type);
+        }
+
+        private static readonly Regex RegexDbLinqProvider = new Regex(@"DbLinqProvider=([\w\.]+);?");
+
+        private static string GetVendorName(ref string connectionString)
+        {
+            var match = RegexDbLinqProvider.Match(connectionString);
+            
+            if (!match.Success)
+            {
+                return "SqlServer";
             }
 
-            typeName = vendor + "Vendor";
+            var vendor = match.Groups[1].Value;
 
+            //plain DbLinq - non MONO: 
+            //IVendor classes are in DLLs such as "DbLinq.MySql.dll"
+            if (vendor.Contains("."))
+            {
+                //already fully qualified DLL name?
+                throw new ArgumentException($"Please provide a short name, such as 'MySql', not '{vendor}'");
+            }
+
+            //shorten: "DbLinqProvider=X;Server=Y" -> ";Server=Y"
+            connectionString.Replace(connectionString, "");
+
+            return vendor;
+        }
+
+        private static Assembly LoadVendorAssembly(string vendorName)
+        {
+            var assemblyName = "DbLinq." + vendorName;
             try
             {
-#if MONO_STRICT
-                assembly = typeof (DataContext).Assembly; // System.Data.Linq.dll
-#else
-                assembly = Assembly.Load(assemblyName);
-#endif
+                return Assembly.Load(assemblyName);
             }
             catch (Exception e)
             {
-                throw new ArgumentException(
-                        string.Format(
-                            "Unable to load the `{0}' DbLinq vendor within assembly '{1}.dll'.",
-                            assemblyName, vendor),
-                        "connectionString", e);
+                throw new ArgumentException($"Unable to load the `{assemblyName}' DbLinq vendor assembly.", nameof(vendorName), e);
             }
         }
+
+        private static bool IsSuitableVendorClass(Type type)
+        {
+            return type.IsClass && type.GetInterfaces().Contains(typeof(IVendor)) &&
+                   type.GetConstructor(Type.EmptyTypes) != null;
+        }        
 
         private void Init(IDatabaseContext databaseContext, MappingSource mappingSource, IVendor vendor)
         {
