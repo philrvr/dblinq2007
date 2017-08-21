@@ -269,7 +269,7 @@ namespace DbLinq.Data.Linq
             }
 
             //shorten: "DbLinqProvider=X;Server=Y" -> ";Server=Y"
-            connectionString.Replace(connectionString, "");
+            connectionString = RegexDbLinqProvider.Replace(connectionString, "");
 
             return vendor;
         }
