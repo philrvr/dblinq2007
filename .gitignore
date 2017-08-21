@@ -7,3 +7,4 @@ obj
 *.csproj.user
 *.sln.DotSettings.user
 *.suo
+src/.vs/
