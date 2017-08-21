@@ -155,7 +155,7 @@ namespace DbLinqTest {
         {
             if (Type.GetType("Mono.Runtime", false) != null)
                 Assert.Ignore("Mono's System.Data.Linq is expected to remove DbLinq parameters.");
-            DataContext ctx = new DataContext("Server=localhost;User id=test;Database=test;DbLinqProvider=Sqlite;DbLinqConnectionType=Mono.Data.Sqlite.SqliteConnection, Mono.Data.Sqlite");
+            DataContext ctx = new DataContext("Server=localhost;User id=test;Database=test;DbLinqProvider=SqlServer;DbLinqConnectionType=System.Data.SqlClient.SqlConnection, System.Data, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089");
             Assert.AreEqual(-1, ctx.Connection.ConnectionString.IndexOf("DbLinqProvider"));
             Assert.AreEqual(-1, ctx.Connection.ConnectionString.IndexOf("DbLinqConnectionType"));
         }
