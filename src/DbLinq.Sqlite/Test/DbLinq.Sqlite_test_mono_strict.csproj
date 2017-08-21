@@ -235,7 +235,7 @@
     <None Include="..\..\DbLinq\Test\Providers\Linq_101_Samples\101_readme.htm">
       <Link>Providers\Linq_101_Samples\101_readme.htm</Link>
     </None>
-    <None Include="packages.config" />
+    <None Include="packages.DbLinq.Sqlite_test_mono_strict.config" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">

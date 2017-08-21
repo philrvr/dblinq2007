@@ -230,7 +230,9 @@
       <Link>Providers\Linq_101_Samples\101_readme.htm</Link>
     </None>
     <None Include="app.config" />
-    <None Include="packages.config" />
+    <None Include="packages.DbLinq.Sqlite_test.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DbLinq.Sqlite.csproj">
